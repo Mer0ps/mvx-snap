@@ -1,19 +1,18 @@
-import { MetaMaskInpageProvider } from '@metamask/providers';
+import type { RpcMethodTypes } from '@mer0ps/snap-mvx';
 import { defaultSnapOrigin } from '../config';
 import { GetSnapsResponse, Snap } from '../types';
 
 /**
  * Get the installed snaps in MetaMask.
  *
- * @param provider - The MetaMask inpage provider.
  * @returns The snaps installed in MetaMask.
  */
-export const getSnaps = async (
-  provider?: MetaMaskInpageProvider,
-): Promise<GetSnapsResponse> =>
-  (await (provider ?? window.ethereum).request({
+export const getSnaps = async (): Promise<GetSnapsResponse> => {
+  return (await window.ethereum.request({
     method: 'wallet_getSnaps',
   })) as unknown as GetSnapsResponse;
+};
+
 /**
  * Connect a snap to MetaMask.
  *
@@ -52,15 +51,44 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
   }
 };
 
-/**
- * Invoke the "hello" method from the example snap.
- */
+export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');
 
-export const sendHello = async () => {
-  await window.ethereum.request({
+type SnapRpcRequestParams<M extends keyof RpcMethodTypes> =
+  RpcMethodTypes[M]['input'] extends undefined
+    ? { snapRpcMethod: M }
+    : { snapRpcMethod: M; params: RpcMethodTypes[M]['input'] };
+
+const snapRpcRequest = async <M extends keyof RpcMethodTypes>(
+  args: SnapRpcRequestParams<M>,
+) => {
+  const result = await window.ethereum.request({
     method: 'wallet_invokeSnap',
-    params: { snapId: defaultSnapOrigin, request: { method: 'hello' } },
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: `mvx_${args.snapRpcMethod}`,
+        params: 'params' in args ? args.params : undefined,
+      },
+    },
+  });
+
+  return result as unknown as RpcMethodTypes[M]['output'];
+};
+
+/**
+ * Invoke the "mvx_getAddress" RPC method from the snap.
+ */
+export const getAddress = async () => {
+  return snapRpcRequest({
+    snapRpcMethod: 'getAddress',
   });
 };
 
-export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');
+/**
+ * Invoke the "mvx_getBalance" RPC method from the snap.
+ */
+export const getBalance = async () => {
+  return snapRpcRequest({
+    snapRpcMethod: 'getBalance',
+  });
+};

@@ -5,17 +5,17 @@ import {
   connectSnap,
   getSnap,
   isLocalSnap,
-  sendHello,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendHelloButton,
   Card,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
+import { useAddress } from '../hooks/useAddress';
+import { useBalance } from '../hooks/useBalance';
 
 const Container = styled.div`
   display: flex;
@@ -123,14 +123,9 @@ const Index = () => {
     }
   };
 
-  const handleSendHelloClick = async () => {
-    try {
-      await sendHello();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
-  };
+  const isSnapInstalled = Boolean(state.installedSnap);
+  const { address } = useAddress(isSnapInstalled);
+  const { balance } = useBalance(isSnapInstalled);
 
   return (
     <Container>
@@ -189,25 +184,24 @@ const Index = () => {
             disabled={!state.installedSnap}
           />
         )}
-        <Card
-          content={{
-            title: 'Send Hello message',
-            description:
-              'Display a custom message within a confirmation screen in MetaMask.',
-            button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
-                disabled={!state.installedSnap}
-              />
-            ),
-          }}
-          disabled={!state.installedSnap}
-          fullWidth={
-            isMetaMaskReady &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
-          }
-        />
+        {address && (
+          <Card
+            fullWidth
+            content={{
+              title: 'Your Mvx Testnet Address',
+              description: address,
+            }}
+          />
+        )}
+        {balance !== undefined && (
+          <Card
+            fullWidth
+            content={{
+              title: 'Your Mvx Testnet Balance',
+              description: `${balance} xEGLD`,
+            }}
+          />
+        )}
         <Notice>
           <p>
             Please note that the <b>snap.manifest.json</b> and{' '}

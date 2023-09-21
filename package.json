@@ -47,5 +47,14 @@
   "packageManager": "yarn@3.2.1",
   "engines": {
     "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@multiversx/sdk-core": "^12.9.0",
+    "@multiversx/sdk-network-providers": "^2.0.0",
+    "@multiversx/sdk-wallet": "^4.2.0",
+    "@vespaiach/axios-fetch-adapter": "^0.3.1",
+    "coininfo": "^5.2.1",
+    "dotenv": "^16.3.1",
+    "envify": "^4.1.0"
   }
 }
