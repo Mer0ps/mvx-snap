@@ -1,6 +1,8 @@
 import type { RpcMethodTypes } from '@mer0ps/snap-mvx';
 import { defaultSnapOrigin } from '../config';
 import { GetSnapsResponse, Snap } from '../types';
+import { Transaction } from '@multiversx/sdk-core/out';
+import { getNetwork } from './network';
 
 /**
  * Get the installed snaps in MetaMask.
@@ -88,7 +90,21 @@ export const getAddress = async () => {
  * Invoke the "mvx_getBalance" RPC method from the snap.
  */
 export const getBalance = async () => {
+  const network = getNetwork();
   return snapRpcRequest({
     snapRpcMethod: 'getBalance',
+    params: { chainId : network.chainId }
+  });
+};
+
+/**
+ * Invoke the "mvx_makeTransaction" RPC method from the snap.
+ *
+ * @param params - The transaction.
+ */
+export const makeTransaction = async (transactionToSend: Transaction) => {
+  return snapRpcRequest({
+    snapRpcMethod: 'makeTransaction',
+    params: transactionToSend.toPlainObject(),
   });
 };

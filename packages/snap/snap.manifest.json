@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
+  "description": "Snap connector to MultiversX chain.",
+  "proposedName": "mvx-snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/Mer0ps/mvx-snap.git"
   },
   "source": {
-    "shasum": "HK+EmVHqVjcLACajkDkDvohP7f5nDNDnPzSnuqd0Mas=",
+    "shasum": "+ya1VwJbJk7tHvMYyY70p8hSvNhcRyNBKVXW/W3IJsg=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -24,6 +24,7 @@
       "snaps": false
     },
     "endowment:network-access": {},
+    "snap_manageState": {},
     "snap_getBip44Entropy": [
       {
         "coinType": 508

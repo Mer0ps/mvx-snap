@@ -5,17 +5,18 @@ import {
   connectSnap,
   getSnap,
   isLocalSnap,
-  shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
-  ReconnectButton,
   Card,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import { useAddress } from '../hooks/useAddress';
 import { useBalance } from '../hooks/useBalance';
+import { useSendTransaction } from '../hooks/useSendTransaction';
+import { getNetwork } from '../utils/network';
+import { getAmountPrice } from '../utils/formatter';
 
 const Container = styled.div`
   display: flex;
@@ -43,16 +44,6 @@ const Span = styled.span`
   color: ${(props) => props.theme.colors.primary.default};
 `;
 
-const Subtitle = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.large};
-  font-weight: 500;
-  margin-top: 0;
-  margin-bottom: 0;
-  ${({ theme }) => theme.mediaQueries.small} {
-    font-size: ${({ theme }) => theme.fontSizes.text};
-  }
-`;
-
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -62,25 +53,6 @@ const CardContainer = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 1.5rem;
-`;
-
-const Notice = styled.div`
-  background-color: ${({ theme }) => theme.colors.background.alternative};
-  border: 1px solid ${({ theme }) => theme.colors.border.default};
-  color: ${({ theme }) => theme.colors.text.alternative};
-  border-radius: ${({ theme }) => theme.radii.default};
-  padding: 2.4rem;
-  margin-top: 2.4rem;
-  max-width: 60rem;
-  width: 100%;
-
-  & > * {
-    margin: 0;
-  }
-  ${({ theme }) => theme.mediaQueries.small} {
-    margin-top: 1.2rem;
-    padding: 1.6rem;
-  }
 `;
 
 const ErrorMessage = styled.div`
@@ -123,18 +95,32 @@ const Index = () => {
     }
   };
 
+  const {
+    error: txError,
+    isLoading: isTxLoading,
+    lastTxId,
+    sendTransaction,
+  } = useSendTransaction();
+
+  const handleSendTransaction: React.FormEventHandler<HTMLFormElement> = async (
+    event,
+  ) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    sendTransaction(formData);
+  };
+
   const isSnapInstalled = Boolean(state.installedSnap);
   const { address } = useAddress(isSnapInstalled);
   const { balance } = useBalance(isSnapInstalled);
+  const network = getNetwork();
 
   return (
     <Container>
       <Heading>
-        Welcome to <Span>template-snap</Span>
+        Welcome to <Span>mvx-snap</Span>
       </Heading>
-      <Subtitle>
-        Get started by editing <code>src/index.ts</code>
-      </Subtitle>
       <CardContainer>
         {state.error && (
           <ErrorMessage>
@@ -168,28 +154,57 @@ const Index = () => {
             disabled={!isMetaMaskReady}
           />
         )}
-        {shouldDisplayReconnectButton(state.installedSnap) && (
-          <Card
-            content={{
-              title: 'Reconnect',
-              description:
-                'While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.',
-              button: (
-                <ReconnectButton
-                  onClick={handleConnectClick}
-                  disabled={!state.installedSnap}
-                />
-              ),
-            }}
-            disabled={!state.installedSnap}
-          />
-        )}
         {address && (
           <Card
             fullWidth
             content={{
-              title: 'Your Mvx Testnet Address',
+              title: `Your Mvx ${network.name} Address`,
               description: address,
+            }}
+          />
+        )}
+        {isSnapInstalled && (
+          <Card
+            fullWidth
+            content={{
+              title: 'Send ' + network.egldLabel,
+              description: (
+                <>
+                  <form onSubmit={handleSendTransaction}>
+                    <p>
+                      <input
+                        type="text"
+                        name="toAddress"
+                        placeholder="Address"
+                      />
+                    </p>
+                    <p>
+                      <input
+                        type="number"
+                        name="amount"
+                        placeholder="Amount"
+                        step="any"
+                      />
+                    </p>
+                    <button disabled={isTxLoading} type="submit">
+                      Send {network.egldLabel}
+                    </button>
+                  </form>
+                  {lastTxId && (
+                    <p>
+                      Latest transaction:{' '}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`${network.explorerAddress}/transactions/${lastTxId}`}
+                      >
+                        {lastTxId}
+                      </a>
+                    </p>
+                  )}
+                  {txError && <ErrorMessage>{txError}</ErrorMessage>}
+                </>
+              ),
             }}
           />
         )}
@@ -197,19 +212,11 @@ const Index = () => {
           <Card
             fullWidth
             content={{
-              title: 'Your Mvx Testnet Balance',
-              description: `${balance} xEGLD`,
+              title: `Your Mvx ${network.name} Balance`,
+              description: `${getAmountPrice(balance) } ${network.egldLabel}`,
             }}
           />
         )}
-        <Notice>
-          <p>
-            Please note that the <b>snap.manifest.json</b> and{' '}
-            <b>package.json</b> must be located in the server root directory and
-            the bundle must be hosted at the location specified by the location
-            field.
-          </p>
-        </Notice>
       </CardContainer>
     </Container>
   );
