@@ -1,18 +1,18 @@
 {
   "version": "0.1.0",
   "description": "Snap connector to MultiversX chain.",
-  "proposedName": "mvx-snap",
+  "proposedName": "MultiversX",
   "repository": {
     "type": "git",
     "url": "https://github.com/Mer0ps/mvx-snap.git"
   },
   "source": {
-    "shasum": "+ya1VwJbJk7tHvMYyY70p8hSvNhcRyNBKVXW/W3IJsg=",
+    "shasum": "3bu2mHWOWDoOu9LfrTEzft2y/1CAHQqYIcDMO20KrR8=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "@mer0ps/test-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }

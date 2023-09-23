@@ -1,5 +1,5 @@
 {
-  "name": "snap",
+  "name": "@mer0ps/test-snap",
   "version": "0.1.0",
   "private": true,
   "description": "Snap connector to MultiversX chain.",
