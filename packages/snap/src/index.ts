@@ -16,7 +16,7 @@ import { SnapState } from './types/snapState';
 export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
   const snapParams = request?.params as unknown as SnapRequestParams;
 
-  let state = await GetSnapState();
+  let state = await getSnapState();
 
   const apiParams: ApiParams = {
     state,
@@ -36,8 +36,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 };
 
 
-async function GetSnapState() {
-  let state = snap.request({
+async function getSnapState() {
+  let state = await snap.request({
     method: 'snap_manageState',
     params: {
       operation: 'get',
@@ -50,14 +50,14 @@ async function GetSnapState() {
       address: await getAddress(),
     };
     
-    CreateSnapState(state);
+    createSnapState(state);
   }
 
   return state;
 }
 
-function CreateSnapState(state: SnapState) {
-  snap.request({
+async function createSnapState(state: SnapState) {
+  await snap.request({
     method: 'snap_manageState',
     params: {
       operation: 'update',
