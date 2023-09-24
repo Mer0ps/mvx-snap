@@ -1,11 +1,11 @@
 {
-  "name": "@mer0ps/test-snap",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@merops/test-snap",
+  "version": "0.1.1",
+  "private": false,
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mer0ps/mvx-snap.git"
+    "url": "git+https://github.com/Mer0ps/mvx-snap.git"
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "main": "src/index.ts",
@@ -65,5 +65,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Mer0ps/mvx-snap/issues"
+  },
+  "homepage": "https://github.com/Mer0ps/mvx-snap#readme",
+  "author": "Mer0ps"
 }
