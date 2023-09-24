@@ -3,6 +3,8 @@ import { getAddress, getBalance, makeTransaction } from './rpc';
 import { ApiParams, SnapRequestParams } from './types/snapParam';
 import { SnapState } from './types/snapState';
 
+export * from './rpc-types';
+
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
  *

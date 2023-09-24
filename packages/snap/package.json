@@ -1,6 +1,6 @@
 {
   "name": "@merops/test-snap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "Snap connector to MultiversX chain.",
   "repository": {
