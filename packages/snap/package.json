@@ -1,7 +1,6 @@
 {
   "name": "@merops/test-snap",
-  "version": "0.1.2",
-  "private": false,
+  "version": "0.1.5",
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
@@ -16,6 +15,7 @@
   ],
   "scripts": {
     "build": "mm-snap build",
+    "manifest": "mm-snap manifest --fix",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
