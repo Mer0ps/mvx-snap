@@ -2,9 +2,8 @@ import { getAccount } from './private-key';
 import { UserSecretKey } from '@multiversx/sdk-wallet';
 import { Address, IPlainTransactionObject, TokenTransfer, Transaction } from '@multiversx/sdk-core';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
-import { Json } from '@metamask/snaps-types';
 import { getApiProvider, getNetwork } from './utils/mvxUtils';
-import { ApiParams, GetBalanceParams, SendTransactionParams } from './types/snapParam';
+import { ApiParams, GetBalanceParams, SendTransactionParams, SignTransactionsParams } from './types/snapParam';
 
 
 
@@ -85,6 +84,59 @@ export const makeTransaction = async (params: ApiParams): Promise<string> => {
     const txResult = await provider.sendTransaction(transaction);
 
     return txResult;
+};
+
+/**
+ * @param transactionToSend - The transaction.
+ */
+export const signTransactions = async (params: ApiParams): Promise<IPlainTransactionObject[]> => {
+  const { state, snapParams } = params;
+  const snapParamsObj = snapParams as SignTransactionsParams;
+
+
+  const account = await getAccount();
+
+  if (!account.privateKeyBytes) {
+    throw new Error('Private key is required');
+  }
+
+  const userSecret = new UserSecretKey((account.privateKeyBytes as Uint8Array));
+
+  let transactionsSigned : IPlainTransactionObject[] = [];
+
+  snapParamsObj.transactions.forEach(async (transactionPlain : IPlainTransactionObject) => {
+    const transaction = Transaction.fromPlainObject(transactionPlain);
+
+    const amount = TokenTransfer.egldFromBigInteger(transaction.getValue().toString());
+
+    const confirmationResponse = await snap.request({
+      method: 'snap_dialog',
+      params: {
+        type: 'confirmation',
+        content: panel([
+          heading('Confirm transaction'),
+          divider(),
+          text('Send the following amount : '),
+          copyable(amount.toPrettyString()),
+          text('To the following address:'),
+          copyable(transaction.getReceiver().bech32()),
+        ]),
+      },
+    });
+
+    if (confirmationResponse !== true) {
+      throw new Error('Transaction must be approved by user');
+    }
+
+    const serializedTransaction = transaction.serializeForSigning();
+    const transactionSignature = userSecret.sign(serializedTransaction);
+    transaction.applySignature(transactionSignature);
+
+    transactionsSigned.push(transaction.toPlainObject());
+
+  });
+
+  return transactionsSigned;
 };
 
 

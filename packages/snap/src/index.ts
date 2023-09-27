@@ -1,5 +1,5 @@
 import { Json, OnRpcRequestHandler } from '@metamask/snaps-types';
-import { getAddress, getBalance, makeTransaction } from './rpc';
+import { getAddress, getBalance, makeTransaction, signTransactions } from './rpc';
 import { ApiParams, SnapRequestParams } from './types/snapParam';
 import { SnapState } from './types/snapState';
 
@@ -32,6 +32,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
       return getBalance(apiParams);
     case 'mvx_makeTransaction':
       return makeTransaction(apiParams);
+    case 'mvx_signTransactions':
+        return signTransactions(apiParams);
     default:
       throw new Error('Method not found.');
   }
