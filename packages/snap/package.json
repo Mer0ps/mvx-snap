@@ -1,6 +1,6 @@
 {
   "name": "@merops/test-snap",
-  "version": "0.1.7",
+  "version": "0.1.14",
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@metamask/snaps-types": "^0.32.2",
+    "@metamask/snaps-types": "^2.0.0",
     "@metamask/snaps-ui": "^0.32.2",
     "buffer": "^6.0.3"
   },

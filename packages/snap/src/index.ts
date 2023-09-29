@@ -1,9 +1,6 @@
-import { Json, OnRpcRequestHandler } from '@metamask/snaps-types';
-import { getAddress, getBalance, makeTransaction, signTransactions } from './rpc';
-import { ApiParams, SnapRequestParams } from './types/snapParam';
-import { SnapState } from './types/snapState';
-
-export * from './rpc-types';
+import { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { getAddress, signMessage, signTransactions } from './rpc';
+import { SignMessageParams, SignTransactionsParams } from './types/snapParam';
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -16,56 +13,17 @@ export * from './rpc-types';
  * @throws If the request method is not valid for this snap.
  */
 export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
-  const snapParams = request?.params as unknown as SnapRequestParams;
-
-  let state = await getSnapState();
-
-  const apiParams: ApiParams = {
-    state,
-    snapParams
-  };
 
   switch (request.method) {
     case 'mvx_getAddress':
       return getAddress();
-    case 'mvx_getBalance':
-      return getBalance(apiParams);
-    case 'mvx_makeTransaction':
-      return makeTransaction(apiParams);
     case 'mvx_signTransactions':
-        return signTransactions(apiParams);
+      const signTransactionParam = request?.params as unknown as SignTransactionsParams;
+        return signTransactions(signTransactionParam);
+    case 'mvx_signMessage':
+      const snapParams = request?.params as unknown as SignMessageParams;
+      return signMessage(snapParams);
     default:
       throw new Error('Method not found.');
   }
 };
-
-
-async function getSnapState() {
-  let state = await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: 'get',
-    },
-  }) as unknown as SnapState;
-
-  //Create the state if not exist
-  if (!state) {
-    state = {
-      address: await getAddress(),
-    };
-    
-    createSnapState(state);
-  }
-
-  return state;
-}
-
-async function createSnapState(state: SnapState) {
-  await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: 'update',
-      newState: state as unknown as Record<string, Json>,
-    },
-  });
-}

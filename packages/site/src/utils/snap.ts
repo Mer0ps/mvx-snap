@@ -1,8 +1,6 @@
-import type { RpcMethodTypes } from '@mer0ps/snap-mvx';
 import { defaultSnapOrigin } from '../config';
 import { GetSnapsResponse, Snap } from '../types';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { getNetwork } from './network';
 
 /**
  * Get the installed snaps in MetaMask.
@@ -55,45 +53,19 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
 
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');
 
-type SnapRpcRequestParams<M extends keyof RpcMethodTypes> =
-  RpcMethodTypes[M]['input'] extends undefined
-    ? { snapRpcMethod: M }
-    : { snapRpcMethod: M; params: RpcMethodTypes[M]['input'] };
-
-const snapRpcRequest = async <M extends keyof RpcMethodTypes>(
-  args: SnapRpcRequestParams<M>,
-) => {
-  const result = await window.ethereum.request({
+/**
+ * Invoke the "mvx_getAddress" RPC method from the snap.
+ */
+export const getAddressSnap = async () => {
+  return await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: {
       snapId: defaultSnapOrigin,
       request: {
-        method: `mvx_${args.snapRpcMethod}`,
-        params: 'params' in args ? args.params : undefined,
+        method: 'mvx_getAddress',
+        params: undefined,
       },
     },
-  });
-
-  return result as unknown as RpcMethodTypes[M]['output'];
-};
-
-/**
- * Invoke the "mvx_getAddress" RPC method from the snap.
- */
-export const getAddress = async () => {
-  return snapRpcRequest({
-    snapRpcMethod: 'getAddress',
-  });
-};
-
-/**
- * Invoke the "mvx_getBalance" RPC method from the snap.
- */
-export const getBalance = async () => {
-  const network = getNetwork();
-  return snapRpcRequest({
-    snapRpcMethod: 'getBalance',
-    params: { chainId : network.chainId }
   });
 };
 
@@ -102,9 +74,38 @@ export const getBalance = async () => {
  *
  * @param params - The transaction.
  */
-export const makeTransaction = async (transactionToSend: Transaction) => {
-  return snapRpcRequest({
-    snapRpcMethod: 'makeTransaction',
-    params: transactionToSend.toPlainObject(),
+export const makeTransactionSnap = async (transactionToSend: Transaction) => {
+
+  const trans =[transactionToSend];
+  const transactionsPlain = trans.map((transaction) => transaction.toPlainObject());
+
+  const metamaskReponse = await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'mvx_signTransactions',
+        params: { transactions : transactionsPlain },
+      },
+    },
+  }) as string[];
+
+  return metamaskReponse[0];
+};
+
+
+export const signMessageSnap = async (message: string) => {
+  
+  const metamaskReponse = await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'mvx_signMessage',
+        params: { message : message },
+      },
+    },
   });
+
+  return metamaskReponse;
 };

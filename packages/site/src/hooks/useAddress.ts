@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAddress } from '../utils';
+import { getAddressSnap } from '../utils';
 
 export const useAddress = (isSnapInstalled: boolean) => {
   const [address, setAddress] = useState<string | undefined>();
@@ -7,7 +7,7 @@ export const useAddress = (isSnapInstalled: boolean) => {
   useEffect(() => {
     if (isSnapInstalled) {
       (async () => {
-        const addressResponse = await getAddress();
+        const addressResponse = await getAddressSnap();
         if (addressResponse) {
           setAddress(addressResponse);
         }

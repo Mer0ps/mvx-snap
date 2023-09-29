@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAddress, makeTransaction } from '../utils';
+import { getAddressSnap, makeTransactionSnap } from '../utils';
 import { Address, TokenTransfer, Transaction } from '@multiversx/sdk-core/out';
 import { getNetwork } from '../utils/network';
 
@@ -22,7 +22,7 @@ export const useSendTransaction = () => {
 
       if (typeof toAddress === 'string' && typeof amount === 'string') {
         
-        const fromAddress = await getAddress();
+        const fromAddress = await getAddressSnap() as string;
         const network = getNetwork();
 
         const transaction = new Transaction({
@@ -35,8 +35,11 @@ export const useSendTransaction = () => {
             version: 1,
           });
 
-        const response = await makeTransaction(transaction);
-        setLastTxId(response);
+        const response = await makeTransactionSnap(transaction);
+        const trans = Transaction.fromPlainObject(JSON.parse(response));
+        
+        //TODO send the transaction with the provider
+        setLastTxId(trans.getHash().hex());
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

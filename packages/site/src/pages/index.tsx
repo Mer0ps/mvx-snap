@@ -13,10 +13,9 @@ import {
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import { useAddress } from '../hooks/useAddress';
-import { useBalance } from '../hooks/useBalance';
 import { useSendTransaction } from '../hooks/useSendTransaction';
 import { getNetwork } from '../utils/network';
-import { getAmountPrice } from '../utils/formatter';
+import { useSignMessage } from '../hooks/useSignMessage';
 
 const Container = styled.div`
   display: flex;
@@ -102,6 +101,21 @@ const Index = () => {
     sendTransaction,
   } = useSendTransaction();
 
+  const {
+    isLoading: isMessageLoading,
+    messageSigned: message,
+    signMessage,
+  } = useSignMessage();
+
+  const handleSignMessage: React.FormEventHandler<HTMLFormElement> = async (
+    event,
+  ) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    signMessage(formData);
+  };
+
   const handleSendTransaction: React.FormEventHandler<HTMLFormElement> = async (
     event,
   ) => {
@@ -113,7 +127,6 @@ const Index = () => {
 
   const isSnapInstalled = Boolean(state.installedSnap);
   const { address } = useAddress(isSnapInstalled);
-  const { balance } = useBalance(isSnapInstalled);
   const network = getNetwork();
 
   return (
@@ -208,12 +221,37 @@ const Index = () => {
             }}
           />
         )}
-        {balance !== undefined && (
+        {isSnapInstalled && (
           <Card
             fullWidth
             content={{
-              title: `Your Mvx ${network.name} Balance`,
-              description: `${getAmountPrice(balance) } ${network.egldLabel}`,
+              title: 'Sign Message',
+              description: (
+                <>
+                  <form onSubmit={handleSignMessage}>
+                    <p>
+                      <input
+                        type="text"
+                        name="message"
+                        placeholder="Message"
+                      />
+                    </p>
+                    <button disabled={isMessageLoading} type="submit">
+                      Sign Message
+                    </button>
+                  </form>
+                  {message && (
+
+                    <textarea
+                    name="message"
+                    disabled
+                    defaultValue={message}
+                    rows={4}
+                    cols={80}
+                    />
+                  )}
+                </>
+              ),
             }}
           />
         )}
