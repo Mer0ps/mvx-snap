@@ -1,6 +1,6 @@
 {
   "name": "@merops/mvx-snap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
