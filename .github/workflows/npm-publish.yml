@@ -18,7 +18,7 @@ jobs:
           yarn-version: 3.6.3
           registry-url: https://registry.npmjs.org/
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --immutable
         working-directory: packages/snap
       - name: Build
         run: yarn build
