@@ -3077,9 +3077,9 @@ __metadata:
   linkType: hard
 
 "@eslint-community/regexpp@npm:^4.4.0, @eslint-community/regexpp@npm:^4.6.1":
-  version: 4.9.0
-  resolution: "@eslint-community/regexpp@npm:4.9.0"
-  checksum: 82411f0643ab9bfd271bf12c8c75031266b13595d9371585ee3b0d680d918d4abf37c7e94d0da22e45817c9bbc59b79dfcbd672050dfb00af88fb89c80fd420f
+  version: 4.9.1
+  resolution: "@eslint-community/regexpp@npm:4.9.1"
+  checksum: 06fb839e9c756f6375cc545c2f2e05a0a64576bd6370e8e3c07983fd29a3d6e164ef4aa48a361f7d27e6713ab79c83053ff6a2ccb78748bc955e344279c4a3b6
   languageName: node
   linkType: hard
 
@@ -9514,9 +9514,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001538, caniuse-lite@npm:^1.0.30001541":
-  version: 1.0.30001541
-  resolution: "caniuse-lite@npm:1.0.30001541"
-  checksum: 972f6c223cf4ea2c6821b817b419249285006bbf67ebe415fe58097cf07551e3bae898586736d92f7c40b9f0ac28638dbf760631c23742b780affd0254f44d17
+  version: 1.0.30001542
+  resolution: "caniuse-lite@npm:1.0.30001542"
+  checksum: 6cf20e2e1fd4c14f98a3cc73df650903bb5fc896c5b7416ada10c3e2c17e905e3d5688e5a201bfc0eebdf2e3d19e1825e21ad03e4d06f2d50f6b1c9f4b837f98
   languageName: node
   linkType: hard
 
@@ -12909,13 +12909,13 @@ __metadata:
   linkType: hard
 
 "fast-xml-parser@npm:^4.1.3":
-  version: 4.3.1
-  resolution: "fast-xml-parser@npm:4.3.1"
+  version: 4.3.2
+  resolution: "fast-xml-parser@npm:4.3.2"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: eddd19dc95f907d9a932012e9ee6240d5d58f9f4a7179996cc0c5ef377bba15638cb025cf4e820f0895f3d4e6edd03d5e7efa675dcfbf895bb8e0f3355b98126
+  checksum: d507ce2efa5fd13d0a5ba28bd76dd68f2fc30ad8748357c37b70f360d19417866d79e35a688af067d5bceaaa796033fa985206aef9692f7a421e1326b6e73309
   languageName: node
   linkType: hard
 
@@ -20140,11 +20140,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.43.9":
-  version: 7.46.2
-  resolution: "react-hook-form@npm:7.46.2"
+  version: 7.47.0
+  resolution: "react-hook-form@npm:7.47.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 5ad2b478337fed3ab1a7bee79844d89a85485626fb1afd4acba54e28adb8f6663d37efefa9000b6ddb33f7de23b765bfac9a1d12e10c63e71463317a307134cf
+  checksum: dec192fec9c54e436f9e47008635dd7849b6b119ed477a9b0cd491367a0b2ced3427cd937febfb245e1cb7578c863917181d903eff4519c2787bf713ec7d3426
   languageName: node
   linkType: hard
 
