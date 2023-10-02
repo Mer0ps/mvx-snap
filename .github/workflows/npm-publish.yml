@@ -15,22 +15,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-        working-directory: packages/snap
-      - run: npm test
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
+          yarn-version: 3.6.3
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
+      - name: Install Dependencies
+        run: yarn install
         working-directory: packages/snap
-      - run: npm publish
+      - name: Build
+        run: yarn build
+        working-directory: packages/snap
+      - run: yarn publish
         working-directory: packages/snap
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
