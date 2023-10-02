@@ -33,9 +33,10 @@ export const signTransactions = async (transactionsParam: SignTransactionsParams
 
   const userSecret = new UserSecretKey((account.privateKeyBytes as Uint8Array));
 
-  const signedTransactionsPromises = transactionsParam.transactions.map(async (transactionPlain: IPlainTransactionObject) => {
+  const transactionsSigned: string[] = [];
+  for (const transactionPlain of transactionsParam.transactions) {
+
     const transaction = Transaction.fromPlainObject(transactionPlain);
-    
     const amount = TokenTransfer.egldFromBigInteger(transaction.getValue().toString());
 
     const confirmationResponse = await snap.request({
@@ -49,6 +50,8 @@ export const signTransactions = async (transactionsParam: SignTransactionsParams
           copyable(amount.toPrettyString()),
           text('To the following address:'),
           copyable(transaction.getReceiver().bech32()),
+          text('data:'),
+          copyable(transaction.getData().toString()),
         ]),
       },
     });
@@ -61,10 +64,8 @@ export const signTransactions = async (transactionsParam: SignTransactionsParams
     const transactionSignature = userSecret.sign(serializedTransaction);
     transaction.applySignature(transactionSignature);
 
-    return JSON.stringify(transaction.toPlainObject());
-  });
-
-  const transactionsSigned = await Promise.all(signedTransactionsPromises);
+    transactionsSigned.push(JSON.stringify(transaction.toPlainObject()));
+  };
 
   return transactionsSigned;
 };
