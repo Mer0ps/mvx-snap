@@ -1,6 +1,9 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { getAddress, signMessage, signTransactions } from './rpc';
-import { SignMessageParams, SignTransactionsParams } from './types/snapParam';
+import { SignMessageParams, SignAuthTokenParams, SignTransactionsParams } from './types/snapParam';
+import { getAddress } from './getAddress';
+import { signTransactions } from './signTransactions';
+import { signMessage } from './signMessage';
+import { signAuthToken } from './signAuthToken';
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -23,6 +26,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
     case 'mvx_signMessage':
       const snapParams = request?.params as unknown as SignMessageParams;
       return signMessage(snapParams);
+    case 'mvx_signAuthToken':
+      const signTokenParams = request?.params as unknown as SignAuthTokenParams;
+      return signAuthToken(signTokenParams);
     default:
       throw new Error('Method not found.');
   }

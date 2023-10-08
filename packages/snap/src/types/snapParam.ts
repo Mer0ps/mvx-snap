@@ -10,3 +10,8 @@ export interface SignMessageParams
 {
   message: string;
 }
+
+export interface SignAuthTokenParams
+{
+  token: string;
+}
