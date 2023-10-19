@@ -7,7 +7,7 @@
     "url": "git+https://github.com/Mer0ps/mvx-snap.git"
   },
   "source": {
-    "shasum": "J6dXpf6eGXKfmDArlkoRRIUBorGTUv64OWaTdvj2N88=",
+    "shasum": "1Xq1HiE29etv887CG4RAXPLkIaGEwgC6wgVhgR3EgJ8=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
