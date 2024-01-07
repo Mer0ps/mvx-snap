@@ -16,6 +16,7 @@ import { useAddress } from '../hooks/useAddress';
 import { useSendTransaction } from '../hooks/useSendTransaction';
 import { getNetwork } from '../utils/network';
 import { useSignMessage } from '../hooks/useSignMessage';
+import { useAuthToken } from '../hooks/useAuthToken';
 
 const Container = styled.div`
   display: flex;
@@ -116,6 +117,21 @@ const Index = () => {
     signMessage(formData);
   };
 
+  const {
+    isLoading: isAuthTokenLoading,
+    authToken: authToken,
+    authentification,
+  } = useAuthToken();
+
+  const handleAuthToken: React.FormEventHandler<HTMLFormElement> = async (
+    event,
+  ) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    authentification(formData);
+  };
+
   const handleSendTransaction: React.FormEventHandler<HTMLFormElement> = async (
     event,
   ) => {
@@ -193,6 +209,14 @@ const Index = () => {
                     </p>
                     <p>
                       <input
+                        defaultValue="EGLD"
+                        type="text"
+                        name="tokenIdentifier"
+                        placeholder="Identifier"
+                      />
+                    </p>
+                    <p>
+                      <input
                         type="number"
                         name="amount"
                         placeholder="Amount"
@@ -246,6 +270,42 @@ const Index = () => {
                     name="message"
                     disabled
                     defaultValue={message}
+                    rows={4}
+                    cols={80}
+                    />
+                  )}
+                </>
+              ),
+            }}
+          />
+        )}
+        {isSnapInstalled && (
+          <Card
+            fullWidth
+            content={{
+              title: 'Sign auth message',
+              description: (
+                <>
+                  <form onSubmit={handleAuthToken}>
+                    <p>
+                      <input
+                        type="text"
+                        name="token"
+                        value="fake token"
+                        placeholder="Fake token"
+                        readOnly
+                      />
+                    </p>
+                    <button disabled={isAuthTokenLoading} type="submit">
+                      Sign Auth token
+                    </button>
+                  </form>
+                  {authToken && (
+
+                    <textarea
+                    name="authToken"
+                    disabled
+                    defaultValue={authToken}
                     rows={4}
                     cols={80}
                     />

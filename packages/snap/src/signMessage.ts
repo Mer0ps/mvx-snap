@@ -20,9 +20,9 @@ export const signMessage = async (
     params: {
       type: 'confirmation',
       content: panel([
-        heading('Sign message'),
+        heading('Message signing'),
         divider(),
-        text('Message : '),
+        text('Message'),
         copyable(messageParam.message),
       ]),
     },

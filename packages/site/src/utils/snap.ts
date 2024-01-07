@@ -54,6 +54,22 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:');
 
 /**
+ * Invoke the "mvx_signAuthToken" RPC method from the snap.
+ */
+export const getTokenSnap = async (token: string) => {
+  return await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'mvx_signAuthToken',
+        params: { token: token },
+      },
+    },
+  });
+};
+
+/**
  * Invoke the "mvx_getAddress" RPC method from the snap.
  */
 export const getAddressSnap = async () => {
@@ -75,34 +91,48 @@ export const getAddressSnap = async () => {
  * @param params - The transaction.
  */
 export const makeTransactionSnap = async (transactionToSend: Transaction) => {
+  const trans = [transactionToSend];
+  const transactionsPlain = trans.map((transaction) =>
+    transaction.toPlainObject(),
+  );
 
-  const trans =[transactionToSend];
-  const transactionsPlain = trans.map((transaction) => transaction.toPlainObject());
-
-  const metamaskReponse = await window.ethereum.request({
+  const metamaskReponse = (await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: {
       snapId: defaultSnapOrigin,
       request: {
         method: 'mvx_signTransactions',
-        params: { transactions : transactionsPlain },
+        params: { transactions: transactionsPlain },
       },
     },
-  }) as string[];
+  })) as string[];
 
   return metamaskReponse[0];
 };
 
-
 export const signMessageSnap = async (message: string) => {
-  
   const metamaskReponse = await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: {
       snapId: defaultSnapOrigin,
       request: {
         method: 'mvx_signMessage',
-        params: { message : message },
+        params: { message: message },
+      },
+    },
+  });
+
+  return metamaskReponse;
+};
+
+export const authTokenSnap = async (token: string) => {
+  const metamaskReponse = await window.ethereum.request({
+    method: 'wallet_invokeSnap',
+    params: {
+      snapId: defaultSnapOrigin,
+      request: {
+        method: 'mvx_signAuthToken',
+        params: { token: token },
       },
     },
   });

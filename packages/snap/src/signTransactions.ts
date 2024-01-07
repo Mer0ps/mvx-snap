@@ -2,6 +2,9 @@ import { SignTransactionsParams } from './types/snapParam';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { TokenTransfer, Transaction } from '@multiversx/sdk-core/out';
 import { getWalletKeys } from './private-key';
+import { denominate } from './denominate';
+import BigNumber from 'bignumber.js';
+import { DECIMALS, DIGITS, TICKER } from './constants';
 
 /**
  * @param params - The transaction(s) to sign.
@@ -14,22 +17,25 @@ export const signTransactions = async (
   const transactionsSigned: string[] = [];
   for (const transactionPlain of transactionsParam.transactions) {
     const transaction = Transaction.fromPlainObject(transactionPlain);
-    const amount = TokenTransfer.egldFromBigInteger(
-      transaction.getValue().toString(),
-    );
+
+    const txValue = formatEGLD(transaction.getValue().toString());
+    const txFees = calculateFees(transaction);
 
     const confirmationResponse = await snap.request({
       method: 'snap_dialog',
       params: {
         type: 'confirmation',
         content: panel([
-          heading('Confirm transaction'),
+          text('Send to'),
+          text(transaction.getReceiver().bech32()),
           divider(),
-          text('Send the following amount : '),
-          copyable(amount.toPrettyString()),
-          text('To the following address:'),
-          copyable(transaction.getReceiver().bech32()),
-          text('data:'),
+          text('Amount'),
+          text(txValue),
+          divider(),
+          text('Fee'),
+          text(txFees),
+          divider(),
+          text('Data'),
           copyable(transaction.getData().toString()),
         ]),
       },
@@ -47,4 +53,21 @@ export const signTransactions = async (
   }
 
   return transactionsSigned;
+
+  function calculateFees(transaction: Transaction) {
+    const bNgasPrice = new BigNumber(transaction.getGasPrice().valueOf());
+    const bNgasUsed = new BigNumber(transaction.getGasLimit().valueOf());
+    const fees = bNgasPrice.times(bNgasUsed).toString();
+
+    return formatEGLD(fees);
+  }
+
+  function formatEGLD(input: string) {
+    return denominate({
+      input: input,
+      denomination: DECIMALS,
+      decimals: DIGITS,
+      ticker: TICKER,
+    });
+  }
 };

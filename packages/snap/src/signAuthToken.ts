@@ -1,5 +1,5 @@
 import { Address, SignableMessage } from '@multiversx/sdk-core';
-import { copyable, divider, heading, panel } from '@metamask/snaps-ui';
+import { copyable, heading, panel, text } from '@metamask/snaps-ui';
 import { SignAuthTokenParams } from './types/snapParam';
 import { getWalletKeys } from './private-key';
 
@@ -7,6 +7,7 @@ import { getWalletKeys } from './private-key';
  * @param tokenParam - The token to sign.
  */
 export const signAuthToken = async (
+  origin: string,
   tokenParam: SignAuthTokenParams,
 ): Promise<string> => {
   const { userSecret, publicKey } = await getWalletKeys();
@@ -16,9 +17,13 @@ export const signAuthToken = async (
     params: {
       type: 'confirmation',
       content: panel([
-        heading('Confirm the Auth Token :'),
-        divider(),
-        copyable(tokenParam.token),
+        heading('Connect to:'),
+        text(origin),
+        heading('Scam/phising verification'),
+        copyable(
+          "Double check the browser's address bar and confirm that you are indeed connecting to " +
+            origin,
+        ),
       ]),
     },
   });

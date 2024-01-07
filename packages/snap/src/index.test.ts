@@ -46,9 +46,9 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Sign message'),
+        heading('Message signing'),
         divider(),
-        text('Message : '),
+        text('Message'),
         copyable(userMessage),
       ]),
     );
@@ -77,9 +77,9 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Sign message'),
+        heading('Message signing'),
         divider(),
-        text('Message : '),
+        text('Message'),
         copyable(userMessage),
       ]),
     );
@@ -101,6 +101,7 @@ describe('onRpcRequest', () => {
     const authToken =
       'aHR0cHM6Ly9teC10ZW1wbGF0ZS1kYXBwLnZlcmNlbC5hcHA.f587f5591b3c69848bee85aa8225d0030c3c3d77810b8bbebd48dbe55b24e819.86400.eyJ0aW1lc3RhbXAiOjE3MDQ1NDAzMjB9';
     const response = request({
+      origin: 'http://localtest:8080',
       method: 'mvx_signAuthToken',
       params: {
         token: authToken,
@@ -111,9 +112,13 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Confirm the Auth Token :'),
-        divider(),
-        copyable(authToken),
+        heading('Connect to:'),
+        text('http://localtest:8080'),
+        heading('Scam/phising verification'),
+        copyable(
+          "Double check the browser's address bar and confirm that you are indeed connecting to " +
+            'http://localtest:8080',
+        ),
       ]),
     );
 
@@ -132,6 +137,7 @@ describe('onRpcRequest', () => {
     const authToken =
       'aHR0cHM6Ly9teC10ZW1wbGF0ZS1kYXBwLnZlcmNlbC5hcHA.f587f5591b3c69848bee85aa8225d0030c3c3d77810b8bbebd48dbe55b24e819.86400.eyJ0aW1lc3RhbXAiOjE3MDQ1NDAzMjB9';
     const response = request({
+      origin: 'http://localtest:8080',
       method: 'mvx_signAuthToken',
       params: {
         token: authToken,
@@ -142,9 +148,13 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Confirm the Auth Token :'),
-        divider(),
-        copyable(authToken),
+        heading('Connect to:'),
+        text('http://localtest:8080'),
+        heading('Scam/phising verification'),
+        copyable(
+          "Double check the browser's address bar and confirm that you are indeed connecting to " +
+            'http://localtest:8080',
+        ),
       ]),
     );
 
@@ -189,15 +199,16 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Confirm transaction'),
+        text('Send to'),
+        text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
-        text('Send the following amount : '),
-        copyable('0.000000000000000001 EGLD'),
-        text('To the following address:'),
-        copyable(
-          'erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh',
-        ),
-        text('data:'),
+        text('Amount'),
+        text('0.000000000000000001 EGLD'),
+        divider(),
+        text('Fee'),
+        text('0.0000000144 EGLD'),
+        divider(),
+        text('Data'),
         copyable(''),
       ]),
     );
@@ -253,15 +264,16 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Confirm transaction'),
+        text('Send to'),
+        text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
-        text('Send the following amount : '),
-        copyable('0.000000000000000001 EGLD'),
-        text('To the following address:'),
-        copyable(
-          'erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh',
-        ),
-        text('data:'),
+        text('Amount'),
+        text('0.000000000000000001 EGLD'),
+        divider(),
+        text('Fee'),
+        text('0.0000000144 EGLD'),
+        divider(),
+        text('Data'),
         copyable(''),
       ]),
     );
@@ -273,15 +285,16 @@ describe('onRpcRequest', () => {
 
     expect(ui2).toRender(
       panel([
-        heading('Confirm transaction'),
+        text('Send to'),
+        text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
-        text('Send the following amount : '),
-        copyable('0.000000000000000002 EGLD'),
-        text('To the following address:'),
-        copyable(
-          'erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh',
-        ),
-        text('data:'),
+        text('Amount'),
+        text('0.000000000000000002 EGLD'),
+        divider(),
+        text('Fee'),
+        text('0.0000000144 EGLD'),
+        divider(),
+        text('Data'),
         copyable(''),
       ]),
     );
@@ -339,15 +352,16 @@ describe('onRpcRequest', () => {
 
     expect(ui).toRender(
       panel([
-        heading('Confirm transaction'),
+        text('Send to'),
+        text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
-        text('Send the following amount : '),
-        copyable('0.000000000000000001 EGLD'),
-        text('To the following address:'),
-        copyable(
-          'erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh',
-        ),
-        text('data:'),
+        text('Amount'),
+        text('0.000000000000000001 EGLD'),
+        divider(),
+        text('Fee'),
+        text('0.0000000144 EGLD'),
+        divider(),
+        text('Data'),
         copyable(''),
       ]),
     );
@@ -359,15 +373,16 @@ describe('onRpcRequest', () => {
 
     expect(ui2).toRender(
       panel([
-        heading('Confirm transaction'),
+        text('Send to'),
+        text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
-        text('Send the following amount : '),
-        copyable('0.000000000000000002 EGLD'),
-        text('To the following address:'),
-        copyable(
-          'erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh',
-        ),
-        text('data:'),
+        text('Amount'),
+        text('0.000000000000000002 EGLD'),
+        divider(),
+        text('Fee'),
+        text('0.0000000144 EGLD'),
+        divider(),
+        text('Data'),
         copyable(''),
       ]),
     );

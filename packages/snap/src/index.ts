@@ -1,5 +1,9 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { SignMessageParams, SignAuthTokenParams, SignTransactionsParams } from './types/snapParam';
+import {
+  SignMessageParams,
+  SignAuthTokenParams,
+  SignTransactionsParams,
+} from './types/snapParam';
 import { getAddress } from './getAddress';
 import { signTransactions } from './signTransactions';
 import { signMessage } from './signMessage';
@@ -15,20 +19,23 @@ import { signAuthToken } from './signAuthToken';
  * @returns The result of `snap_dialog`.
  * @throws If the request method is not valid for this snap.
  */
-export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
-
+export const onRpcRequest: OnRpcRequestHandler = async ({
+  origin,
+  request,
+}) => {
   switch (request.method) {
     case 'mvx_getAddress':
       return getAddress();
     case 'mvx_signTransactions':
-      const signTransactionParam = request?.params as unknown as SignTransactionsParams;
-        return signTransactions(signTransactionParam);
+      const signTransactionParam =
+        request?.params as unknown as SignTransactionsParams;
+      return signTransactions(signTransactionParam);
     case 'mvx_signMessage':
       const snapParams = request?.params as unknown as SignMessageParams;
       return signMessage(snapParams);
     case 'mvx_signAuthToken':
       const signTokenParams = request?.params as unknown as SignAuthTokenParams;
-      return signAuthToken(signTokenParams);
+      return signAuthToken(origin, signTokenParams);
     default:
       throw new Error('Method not found.');
   }
