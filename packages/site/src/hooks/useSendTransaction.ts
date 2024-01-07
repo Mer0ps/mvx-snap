@@ -21,23 +21,22 @@ export const useSendTransaction = () => {
       const amount = data.get('amount');
 
       if (typeof toAddress === 'string' && typeof amount === 'string') {
-        
-        const fromAddress = await getAddressSnap() as string;
+        const fromAddress = (await getAddressSnap()) as string;
         const network = getNetwork();
 
         const transaction = new Transaction({
-            value: TokenTransfer.egldFromAmount(amount),
-            receiver: Address.fromBech32(toAddress),
-            sender: Address.fromBech32(fromAddress),
-            gasPrice: 1000000000,
-            gasLimit: 70000,
-            chainID: network.chainId,
-            version: 1,
-          });
+          value: TokenTransfer.egldFromAmount(amount),
+          receiver: Address.fromBech32(toAddress),
+          sender: Address.fromBech32(fromAddress),
+          gasPrice: 1000000000,
+          gasLimit: 70000,
+          chainID: network.chainId,
+          version: 1,
+        });
 
         const response = await makeTransactionSnap(transaction);
         const trans = Transaction.fromPlainObject(JSON.parse(response));
-        
+
         //TODO send the transaction with the provider
         setLastTxId(trans.getHash().hex());
       }

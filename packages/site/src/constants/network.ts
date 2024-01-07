@@ -1,6 +1,5 @@
-import { EnvironmentsEnum } from "../types/enums.types";
-import { NetworkType } from "../types/network.types";
-
+import { EnvironmentsEnum } from '../types/enums.types';
+import { NetworkType } from '../types/network.types';
 
 export const fallbackNetworkConfigurations: Record<
   keyof typeof EnvironmentsEnum,
@@ -18,10 +17,10 @@ export const fallbackNetworkConfigurations: Record<
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
     walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
-    walletAddress: 'https://devnet2-wallet.multiversx.com',
-    apiAddress: 'https://devnet2-api.multiversx.com',
-    explorerAddress: 'http://devnet2-explorer.multiversx.com',
-    apiTimeout: '4000'
+    walletAddress: 'https://devnet-wallet.multiversx.com',
+    apiAddress: 'https://devnet-api.multiversx.com',
+    explorerAddress: 'http://devnet-explorer.multiversx.com',
+    apiTimeout: '4000',
   },
   testnet: {
     id: 'testnet',
@@ -38,7 +37,7 @@ export const fallbackNetworkConfigurations: Record<
     walletAddress: 'https://testnet-wallet.multiversx.com',
     apiAddress: 'https://testnet-api.multiversx.com',
     explorerAddress: 'http://testnet-explorer.multiversx.com',
-    apiTimeout: '4000'
+    apiTimeout: '4000',
   },
   mainnet: {
     id: 'mainnet',
@@ -55,8 +54,8 @@ export const fallbackNetworkConfigurations: Record<
     walletAddress: 'https://wallet.multiversx.com',
     apiAddress: 'https://api.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
-    apiTimeout: '4000'
-  }
+    apiTimeout: '4000',
+  },
 };
 
 const { chainId: DEVNET_CHAIN_ID, egldLabel: DEVNET_EGLD_LABEL } =
@@ -72,19 +71,19 @@ export {
   MAINNET_CHAIN_ID,
   DEVNET_EGLD_LABEL,
   TESTNET_EGLD_LABEL,
-  MAINNET_EGLD_LABEL
+  MAINNET_EGLD_LABEL,
 };
 
 export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.devnet]: DEVNET_CHAIN_ID,
   [EnvironmentsEnum.testnet]: TESTNET_CHAIN_ID,
-  [EnvironmentsEnum.mainnet]: MAINNET_CHAIN_ID
+  [EnvironmentsEnum.mainnet]: MAINNET_CHAIN_ID,
 };
 
 export const chainIdToEnvironment: Record<string, EnvironmentsEnum> = {
   [DEVNET_CHAIN_ID]: EnvironmentsEnum.devnet,
   [TESTNET_CHAIN_ID]: EnvironmentsEnum.testnet,
-  [MAINNET_CHAIN_ID]: EnvironmentsEnum.mainnet
+  [MAINNET_CHAIN_ID]: EnvironmentsEnum.mainnet,
 };
 
 export const MULTIVERSX_ORIGIN = 'multiversx://';

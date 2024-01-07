@@ -1,19 +1,29 @@
-import { BIP44Node, getBIP44AddressKeyDeriver } from '@metamask/key-tree';
+import { SLIP10Node, JsonSLIP10Node } from '@metamask/key-tree';
+import { UserSecretKey } from '@multiversx/sdk-wallet/out';
 
 /**
  * The path of the account is m/44'/508'/0'/0/0.
  */
-export const getAccount = async (): Promise<BIP44Node> => {
-  const mvxNode = await snap.request({
-    method: 'snap_getBip44Entropy',
+export const getWalletKeys = async () => {
+  const rootNode = (await snap.request({
+    method: 'snap_getBip32Entropy',
     params: {
-      coinType: 508, 
+      path: ['m', "44'", "508'", "0'", "0'", "0'"],
+      curve: 'ed25519',
     },
-  });
+  })) as unknown as JsonSLIP10Node;
 
-  const deriveMvxPrivateKey = await getBIP44AddressKeyDeriver(
-    mvxNode,
-  );
+  const node = await SLIP10Node.fromJSON(rootNode);
 
-  return deriveMvxPrivateKey(0);
+  if (node.privateKeyBytes === undefined) {
+    throw new Error('Cannot retrieve the privat key');
+  }
+
+  const userSecret = new UserSecretKey(node.privateKeyBytes as Uint8Array);
+
+  return {
+    privateKey: node.privateKeyBytes,
+    publicKey: userSecret.generatePublicKey().toAddress().bech32(),
+    userSecret: userSecret,
+  };
 };
