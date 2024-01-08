@@ -1,6 +1,6 @@
 import { SignableMessage } from '@multiversx/sdk-core/out';
 import { SignMessageParams } from './types/snapParam';
-import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
+import { panel, text, copyable, heading, divider } from '@metamask/snaps-sdk';
 import { getWalletKeys } from './private-key';
 
 /**

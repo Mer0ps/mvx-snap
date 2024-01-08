@@ -1,13 +1,21 @@
 import { SignTransactionsParams } from './types/snapParam';
-import { copyable, divider, panel, text } from '@metamask/snaps-ui';
 import { IPlainTransactionObject, Transaction } from '@multiversx/sdk-core/out';
 import { getWalletKeys } from './private-key';
 import { denominate } from './denominate';
-import { DECIMALS, DIGITS } from './constants';
+import { DECIMALS, DIGITS, EGLD_LOGO } from './constants';
 import { getNetworkConfig, getNetworkType } from './network';
 import { NetworkType } from './types/networkType';
 import { NetworkConfig } from '@multiversx/sdk-network-providers/out';
 import { UserSecretKey } from '@multiversx/sdk-wallet/out';
+import {
+  divider,
+  image,
+  panel,
+  row,
+  text,
+  copyable,
+  RowVariant,
+} from '@metamask/snaps-sdk';
 
 /**
  * @param params - The transaction(s) to sign.
@@ -98,10 +106,10 @@ export const signTransactions = async (
           text(transaction.getReceiver().bech32()),
           divider(),
           text('Amount'),
-          text(txValue),
+          row(txValue, image(EGLD_LOGO), RowVariant.Default),
           divider(),
           text('Fee'),
-          text(txFees),
+          row(txFees, image(EGLD_LOGO), RowVariant.Default),
           divider(),
           text('Data'),
           copyable(transaction.getData().toString()),

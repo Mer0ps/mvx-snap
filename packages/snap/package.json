@@ -1,6 +1,6 @@
 {
   "name": "@merops/mvx-snap",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
@@ -27,8 +27,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@metamask/snaps-types": "^2.0.0",
-    "@metamask/snaps-ui": "^0.32.2",
     "@multiversx/sdk-core": "^12.17.0",
     "@multiversx/sdk-network-providers": "^2.2.0",
     "@multiversx/sdk-wallet": "^4.2.0",
@@ -45,7 +43,7 @@
     "@metamask/eslint-config-typescript": "^12.1.0",
     "@metamask/snaps-cli": "^4.0.0",
     "@metamask/snaps-jest": "^4.0.1",
-    "@metamask/snaps-sdk": "^1.2.0",
+    "@metamask/snaps-sdk": "^1.3.2",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.55.0",
