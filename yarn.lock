@@ -4133,6 +4133,7 @@ __metadata:
     "@metamask/snaps-types": ^2.0.0
     "@metamask/snaps-ui": ^0.32.2
     "@multiversx/sdk-core": ^12.17.0
+    "@multiversx/sdk-network-providers": ^2.2.0
     "@multiversx/sdk-wallet": ^4.2.0
     "@types/jest": ^29.5.11
     "@typescript-eslint/eslint-plugin": ^5.33.0

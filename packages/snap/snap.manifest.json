@@ -1,5 +1,5 @@
 {
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Snap connector to MultiversX chain.",
   "proposedName": "MultiversX",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "git+https://github.com/Mer0ps/mvx-snap.git"
   },
   "source": {
-    "shasum": "gCqtE73rvnFO0MehMeLzJJ/Hiug7VRKflgs4n098dd4=",
+    "shasum": "UCOBvZR1UN7gZFPH/JhEIk3q+FFZGZCNEtdLO01gsIs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -18,6 +18,7 @@
     }
   },
   "initialPermissions": {
+    "endowment:network-access": {},
     "snap_dialog": {},
     "endowment:rpc": {
       "dapps": true,

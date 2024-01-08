@@ -1,6 +1,6 @@
 {
   "name": "@merops/mvx-snap",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Snap connector to MultiversX chain.",
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "@metamask/snaps-types": "^2.0.0",
     "@metamask/snaps-ui": "^0.32.2",
     "@multiversx/sdk-core": "^12.17.0",
+    "@multiversx/sdk-network-providers": "^2.2.0",
     "@multiversx/sdk-wallet": "^4.2.0",
     "@types/jest": "^29.5.11",
     "buffer": "^6.0.3"

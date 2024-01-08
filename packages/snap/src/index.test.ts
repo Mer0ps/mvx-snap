@@ -171,7 +171,44 @@ describe('onRpcRequest', () => {
   });
 
   it('User agrees to sign a single transaction', async () => {
-    const { request, close } = await installSnap();
+    const { mock, request, close } = await installSnap();
+
+    await mock({
+      url: 'https://devnet-api.multiversx.com/network/config',
+      response: {
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: {
+            config: {
+              erd_adaptivity: 'false',
+              erd_chain_id: 'D',
+              erd_denomination: 18,
+              erd_extra_gas_limit_guarded_tx: 50000,
+              erd_gas_per_data_byte: 1500,
+              erd_gas_price_modifier: '0.01',
+              erd_hysteresis: '0.200000',
+              erd_latest_tag_software_version: 'D1.6.10.0',
+              erd_max_gas_per_transaction: 600000000,
+              erd_meta_consensus_group_size: 58,
+              erd_min_gas_limit: 50000,
+              erd_min_gas_price: 1000000000,
+              erd_min_transaction_version: 1,
+              erd_num_metachain_nodes: 58,
+              erd_num_nodes_in_shard: 58,
+              erd_num_shards_without_meta: 3,
+              erd_rewards_top_up_gradient_point: '2000000000000000000000000',
+              erd_round_duration: 6000,
+              erd_rounds_per_epoch: 2400,
+              erd_shard_consensus_group_size: 21,
+              erd_start_time: 1694000000,
+              erd_top_up_factor: '0.500000',
+            },
+          },
+          code: 'successful',
+          ok: true,
+        }),
+      },
+    });
 
     const transactions = [
       {
@@ -203,10 +240,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 EGLD'),
+        text('0.000000000000000001 xEGLD'),
         divider(),
         text('Fee'),
-        text('0.0000000144 EGLD'),
+        text('0.000000006084 xEGLD'),
         divider(),
         text('Data'),
         copyable(''),
@@ -224,7 +261,44 @@ describe('onRpcRequest', () => {
   });
 
   it('User sign a transaction and refuse the other one', async () => {
-    const { request, close } = await installSnap();
+    const { mock, request, close } = await installSnap();
+
+    await mock({
+      url: 'https://devnet-api.multiversx.com/network/config',
+      response: {
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: {
+            config: {
+              erd_adaptivity: 'false',
+              erd_chain_id: 'D',
+              erd_denomination: 18,
+              erd_extra_gas_limit_guarded_tx: 50000,
+              erd_gas_per_data_byte: 1500,
+              erd_gas_price_modifier: '0.01',
+              erd_hysteresis: '0.200000',
+              erd_latest_tag_software_version: 'D1.6.10.0',
+              erd_max_gas_per_transaction: 600000000,
+              erd_meta_consensus_group_size: 58,
+              erd_min_gas_limit: 50000,
+              erd_min_gas_price: 1000000000,
+              erd_min_transaction_version: 1,
+              erd_num_metachain_nodes: 58,
+              erd_num_nodes_in_shard: 58,
+              erd_num_shards_without_meta: 3,
+              erd_rewards_top_up_gradient_point: '2000000000000000000000000',
+              erd_round_duration: 6000,
+              erd_rounds_per_epoch: 2400,
+              erd_shard_consensus_group_size: 21,
+              erd_start_time: 1694000000,
+              erd_top_up_factor: '0.500000',
+            },
+          },
+          code: 'successful',
+          ok: true,
+        }),
+      },
+    });
 
     const transactions = [
       {
@@ -268,10 +342,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 EGLD'),
+        text('0.000000000000000001 xEGLD'),
         divider(),
         text('Fee'),
-        text('0.0000000144 EGLD'),
+        text('0.000000006084 xEGLD'),
         divider(),
         text('Data'),
         copyable(''),
@@ -289,10 +363,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000002 EGLD'),
+        text('0.000000000000000002 xEGLD'),
         divider(),
         text('Fee'),
-        text('0.0000000144 EGLD'),
+        text('0.000000006084 xEGLD'),
         divider(),
         text('Data'),
         copyable(''),
@@ -312,7 +386,44 @@ describe('onRpcRequest', () => {
   });
 
   it('User sign all transactions', async () => {
-    const { request, close } = await installSnap();
+    const { mock, request, close } = await installSnap();
+
+    await mock({
+      url: 'https://devnet-api.multiversx.com/network/config',
+      response: {
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: {
+            config: {
+              erd_adaptivity: 'false',
+              erd_chain_id: 'D',
+              erd_denomination: 18,
+              erd_extra_gas_limit_guarded_tx: 50000,
+              erd_gas_per_data_byte: 1500,
+              erd_gas_price_modifier: '0.01',
+              erd_hysteresis: '0.200000',
+              erd_latest_tag_software_version: 'D1.6.10.0',
+              erd_max_gas_per_transaction: 600000000,
+              erd_meta_consensus_group_size: 58,
+              erd_min_gas_limit: 50000,
+              erd_min_gas_price: 1000000000,
+              erd_min_transaction_version: 1,
+              erd_num_metachain_nodes: 58,
+              erd_num_nodes_in_shard: 58,
+              erd_num_shards_without_meta: 3,
+              erd_rewards_top_up_gradient_point: '2000000000000000000000000',
+              erd_round_duration: 6000,
+              erd_rounds_per_epoch: 2400,
+              erd_shard_consensus_group_size: 21,
+              erd_start_time: 1694000000,
+              erd_top_up_factor: '0.500000',
+            },
+          },
+          code: 'successful',
+          ok: true,
+        }),
+      },
+    });
 
     const transactions = [
       {
@@ -356,10 +467,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 EGLD'),
+        text('0.000000000000000001 xEGLD'),
         divider(),
         text('Fee'),
-        text('0.0000000144 EGLD'),
+        text('0.000000006084 xEGLD'),
         divider(),
         text('Data'),
         copyable(''),
@@ -377,10 +488,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000002 EGLD'),
+        text('0.000000000000000002 xEGLD'),
         divider(),
         text('Fee'),
-        text('0.0000000144 EGLD'),
+        text('0.000000006084 xEGLD'),
         divider(),
         text('Data'),
         copyable(''),
