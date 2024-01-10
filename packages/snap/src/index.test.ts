@@ -1,7 +1,17 @@
 import { SnapConfirmationInterface, installSnap } from '@metamask/snaps-jest';
 import { expect } from '@jest/globals';
-import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
+import {
+  heading,
+  divider,
+  image,
+  panel,
+  row,
+  text,
+  copyable,
+  RowVariant,
+} from '@metamask/snaps-sdk';
 import { assert } from '@metamask/snaps-sdk';
+import { EGLD_LOGO } from './constants';
 
 describe('onRpcRequest', () => {
   it('Get public address', async () => {
@@ -240,10 +250,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 xEGLD'),
+        row('0.000000000000000001 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Fee'),
-        text('0.000000006084 xEGLD'),
+        row('0.000000006084 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Data'),
         copyable(''),
@@ -342,10 +352,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 xEGLD'),
+        row('0.000000000000000001 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Fee'),
-        text('0.000000006084 xEGLD'),
+        row('0.000000006084 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Data'),
         copyable(''),
@@ -363,10 +373,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000002 xEGLD'),
+        row('0.000000000000000002 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Fee'),
-        text('0.000000006084 xEGLD'),
+        row('0.000000006084 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Data'),
         copyable(''),
@@ -467,10 +477,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000001 xEGLD'),
+        row('0.000000000000000001 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Fee'),
-        text('0.000000006084 xEGLD'),
+        row('0.000000006084 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Data'),
         copyable(''),
@@ -488,10 +498,10 @@ describe('onRpcRequest', () => {
         text('erd1elfck5guq2akmdee9p6lwv6wa8cuf250fajmff99kpu3vhgcnjlqs8radh'),
         divider(),
         text('Amount'),
-        text('0.000000000000000002 xEGLD'),
+        row('0.000000000000000002 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Fee'),
-        text('0.000000006084 xEGLD'),
+        row('0.000000006084 xEGLD', image(EGLD_LOGO), RowVariant.Default),
         divider(),
         text('Data'),
         copyable(''),
